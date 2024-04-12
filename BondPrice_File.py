@@ -1,8 +1,15 @@
 
+def getBondDuration(y, face, couponRate, m, ppy = 1):
+    pmt = face * couponRate / ppy
+    duration = 0
+    pvsum = 0  
+    for t in range(1, m*ppy  + 1):
+        pv = pmt / ((1 + y/ppy) ** t)
+        if t == m * ppy:
+            pv += face / ((1 + y/ppy) ** t) 
+        duration += t * pv
+        pvsum += pv
 
-def getBondPrice(y, face, couponRate, m, ppy=1):
-    if ppy == 1:
-        x = 2170604
-    if ppy == 2:
-        x = 2171686
-    return(x)
+    duration /= pvsum  
+    duration /= ppy     
+    return duration
